@@ -180,5 +180,9 @@ func Init() {
 
 	go activitypub.StartupArchive()
 
-	go db.MakeCaptchas()
+	go func() {
+		if err := db.MakeCaptchas(); err != nil {
+			log.Printf("Failed to create captchas: %v", err)
+		}
+	}()
 }
